@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import styles from "./App.module.css";
 
-const ActorList = ({ onSelectActor }) => {
-  const [actors, setActors] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "http://localhost:3000/api/v1/actors?fbclid=IwAR1wk0OxFQycTys0KOFOKo3tOwW5PaW94PF1Hj48WmUW9C1p5adk1ekFEDo"
-      )
-      .then((response) => {
-        setActors(response.data);
-      })
-      .catch((error) => console.error("Error fetching actors", error));
-  }, []);
-
+const ActorList = ({ actors }) => {
   return (
-    <div className={styles.container}>
-      <h1>Actor List</h1>
-      {actors.map((actor) => (
-        <div key={actor.actor_id} className={styles.actorItem}>
-          <span>
-            {actor.first_name} {actor.last_name}
-          </span>
-          <button onClick={() => onSelectActor(actor.actor_id)}>
-            View Details
-          </button>
+    <div className={styles.formContainer}>
+      {actors && actors.length > 0 && (
+        <div className={styles.actorsList}>
+          <h4>Actor List from SAKILA</h4>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Last Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {actors.map((actor) => (
+                <tr key={actor.actor_id}>
+                  <td>{actor.actor_id}</td>
+                  <td>{actor.first_name}</td>
+                  <td>{actor.last_name}</td>
+                  <td>{actor.last_update}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      ))}
+      )}
     </div>
   );
 };

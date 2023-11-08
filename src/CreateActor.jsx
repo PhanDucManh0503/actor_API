@@ -45,50 +45,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./App.module.css";
 
-const ActorsList = () => {
-  const [actors, setActors] = useState([]);
-
-  const loadActors = () => {
-    axios
-      .get("http://localhost:3000/api/v1/actors")
-      .then((response) => {
-        setActors(response.data);
-      })
-      .catch((error) => console.error("Error loading actors", error));
-  };
-
-  return (
-    <div>
-      <button className={styles.button} onClick={loadActors}>
-        Load Actor List
-      </button>
-      <div className={styles.actorsList}>
-        <h4>Actor List from SAKILA</h4>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Last Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            {actors.map((actor) => (
-              <tr key={actor.actor_id}>
-                <td>{actor.actor_id}</td>
-                <td>{actor.first_name}</td>
-                <td>{actor.last_name}</td>
-                <td>{actor.last_update}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
-
 const CreateActor = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -128,13 +84,4 @@ const CreateActor = () => {
   );
 };
 
-const App = () => {
-  return (
-    <div className={styles.appContainer}>
-      <ActorsList />
-      <CreateActor />
-    </div>
-  );
-};
-
-export default App;
+export default CreateActor;
